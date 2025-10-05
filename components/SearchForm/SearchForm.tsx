@@ -4,13 +4,26 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { extractUrlFromText } from "./extractUrlFromText";
 import { URLInput } from "./URLInput";
-import { useSearchFormData } from "./useSearchFormData";
+import { useLocalStorage } from "./useLocalStorage";
 
 export const SearchForm = () => {
 	const router = useRouter();
 	const [url, setUrl] = useState("");
 	const [urlParseError, setUrlParseError] = useState<string | null>(null);
-	const { formData, updateFormData } = useSearchFormData();
+
+	const [bahnCard, setBahnCard] = useLocalStorage("bahnCard", "none");
+
+	const [hasDeutschlandTicket, setHasDeutschlandTicket] = useLocalStorage(
+		"hasDeutschlandTicket",
+		false
+	);
+
+	const [passengerAge, setPassengerAge] = useLocalStorage<string>(
+		"passengerAge",
+		""
+	);
+
+	const [travelClass, setTravelClass] = useLocalStorage("travelClass", "2");
 
 	const handleUrlParsingAndNavigation = () => {
 		if (!url.trim()) {
@@ -31,10 +44,10 @@ export const SearchForm = () => {
 
 		const searchParams = new URLSearchParams({
 			url: extractedUrl,
-			bahnCard: formData.bahnCard,
-			hasDeutschlandTicket: String(formData.hasDeutschlandTicket),
-			passengerAge: String(formData.passengerAge),
-			travelClass: formData.travelClass,
+			bahnCard,
+			hasDeutschlandTicket: String(hasDeutschlandTicket),
+			passengerAge: String(passengerAge),
+			travelClass,
 			// autoSearch: "true", // Flag to indicate auto-search should happen
 		});
 
@@ -48,46 +61,52 @@ export const SearchForm = () => {
 				<URLInput url={url} setUrl={setUrl} />
 				<div className="flex flex-col md:flex-row gap-8">
 					<select
-						value={formData.bahnCard}
-						onChange={(e) => updateFormData({ bahnCard: e.target.value })}
+						value={bahnCard}
+						onChange={(e) => setBahnCard(e.target.value)}
 						className="w-full px-3 py-2 resize-vertical border-b-2 border-gray-300 focus:ring-2 focus:ring-primary"
 					>
-						<option className="text-black" value="none">Keine BahnCard</option>
-						<option className="text-black" value="25">BahnCard 25 </option>
-						<option className="text-black" value="50">BahnCard 50 </option>
+						<option className="text-black" value="none">
+							Keine BahnCard
+						</option>
+						<option className="text-black" value="25">
+							BahnCard 25{" "}
+						</option>
+						<option className="text-black" value="50">
+							BahnCard 50{" "}
+						</option>
 					</select>
 					<input
 						type="number"
-						value={formData.passengerAge}
-						onChange={(e) => updateFormData({ passengerAge: e.target.value })}
+						value={passengerAge}
+						onChange={(e) => setPassengerAge(e.target.value)}
 						placeholder="Alter des Reisenden"
 						min="0"
 						max="120"
 						className="w-full px-3 py-2 resize-vertical border-b-2 border-gray-300 focus:ring-2 focus:ring-primary"
 					/>
 					<select
-						value={String(formData.hasDeutschlandTicket)}
-						onChange={(e) =>
-							updateFormData({
-								hasDeutschlandTicket: e.target.value === "true",
-							})
-						}
+						value={String(hasDeutschlandTicket)}
+						onChange={(e) => setHasDeutschlandTicket(e.target.value === "true")}
 						className="w-full px-3 py-2 resize-vertical border-b-2 border-gray-300 focus:ring-2 focus:ring-primary"
 					>
-						<option className="text-black" value="true">Deutschlandticket</option>
-						<option className="text-black" value="false">Kein Deutschlandticket</option>
+						<option className="text-black" value="true">
+							Deutschlandticket
+						</option>
+						<option className="text-black" value="false">
+							Kein Deutschlandticket
+						</option>
 					</select>
 					<select
-						value={String(formData.travelClass)}
-						onChange={(e) =>
-							updateFormData({
-								travelClass: e.target.value,
-							})
-						}
+						value={String(travelClass)}
+						onChange={(e) => setTravelClass(e.target.value)}
 						className="w-full px-3 py-2 resize-vertical border-b-2 border-gray-300 focus:ring-2 focus:ring-primary"
 					>
-						<option className="text-black" value="1">Erste Klasse</option>
-						<option className="text-black" value="2">Zweite Klasse</option>
+						<option className="text-black" value="1">
+							Erste Klasse
+						</option>
+						<option className="text-black" value="2">
+							Zweite Klasse
+						</option>
 					</select>
 				</div>
 
@@ -105,6 +124,6 @@ export const SearchForm = () => {
 					<strong>Fehler:</strong> {urlParseError}
 				</div>
 			)}
-		</section >
+		</section>
 	);
 };
