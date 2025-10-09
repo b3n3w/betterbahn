@@ -3,17 +3,14 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "cron" 
-      value: "0 0 1 */2 *" 
+      interval: "monthly" 
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "cron" 
-      value: "0 0 1 */2 *" 
+      interval: "monthly" 
 
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interval: "cron" 
-      value: "0 0 1 */2 *" 
+      interval: "monthly" 
