@@ -5,7 +5,7 @@ services:
     environment:
       - TZ=Europe/Berlin # Timezone, dont Remove or else There will be time issues with tickets.
     ports:
-      - "3000:3000"
+      - "5000:3000"
     read_only: true
     user: "1000:1000"
     tmpfs:
