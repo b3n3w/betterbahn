@@ -116,7 +116,7 @@ export const parseHinfahrtReconWithAPI = async (
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
-			"Cookie": cookies.join(" "),
+			"Cookie": "E6BF64FE40122658A5BA3C6BFF03B042~YAAQEhczF2PYpeOZAQAAGLGV7B32YWCNcLBeGKZA3acb6t9OYXCFDaVmT8n+Pep9lwz+8x+ELCG/DflXr8JIjlUo/wHnomP8JB0d5dW7sDD1nhawsGRsdzTlcBp88Pv7rBzVx76AEekK7fxREUTQDW1HAta1PZX/kibZ56T6SkmSKN3TAsivJZFNqRySJ7zVa1s0L2pR2gQ1y7Rg/nX7Uz180n2O7df/JfeAI/kaDB9lMBNePQ5cNQUDnv5UpFBp0Sj+X4fKlQUnaiaXoTovvqR/MrSt5hg9vwJnCgJ8RvGLZyeBu4luCOtX5TIHWseCb3KJJpU0UInd6GtFal5ANUoUFvPvKI28RMaEVKyqwcVtCuq9ukTAK5STFtXHnK8W5p9bR8F1T351yDdL1zNtqBE=~3227969~4274229",
 		},
 		body: {
 			klasse: "KLASSE_2",
